@@ -1,33 +1,39 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <stdlib.h>  // malloc, free ¸¦ À§ÇÑ ¶óÀÌºê·¯¸®
+#include <stdlib.h>  // malloc, free ë¥¼ ìœ„í•œ ë¼ì´ë¸ŒëŸ¬ë¦¬
 #include <windows.h>
 
 // stack
 // function : push, pop, size, isEmpty
 // stack size 10
-// push pop function¿¡¼­ ÇöÀç size¿¡ µû¸¥ ¿¹¿ÜÃ³¸®
-// stackÀº ¹è¿­·Î ¼±¾ğÇÏ°í ¼±¾ğÀ§Ä¡´Â mainÇÔ¼ö ³»ºÎ
+// push pop functionì—ì„œ í˜„ì¬ sizeì— ë”°ë¥¸ ì˜ˆì™¸ì²˜ë¦¬
+// stackì€ ë°°ì—´ë¡œ ì„ ì–¸í•˜ê³  ì„ ì–¸ìœ„ì¹˜ëŠ” mainí•¨ìˆ˜ ë‚´ë¶€
 
 #define UC unsigned char
 
-// ÇÔ¼ö
+// í•¨ìˆ˜
 void push(UC*, int); void pop(UC*, int ); void size(UC* , int); void isEmpty(UC*, int);
-// Àü¿ªº¯¼ö
+// ì „ì—­ë³€ìˆ˜
 
 
-// Main ¹®
+// Main ë¬¸
 int main() {
+	// ì˜¤ë˜ëœ IDEì—ëŠ” ë³€ìˆ˜ë¥¼ ìƒë‹¨ì— ë¨¼ì € ì„ ì–¸í•´ì•¼í•œë‹¤.(C2143)
 	int input = 0;
-	printf(" ¿øÇÏ´Â ½ºÅÃ»çÀÌÁî ÀÔ·Â : ");
+	int sizeOfArray = 0;
+	int i = 0;
+
+	UC* stack;
+
+	printf(" ì›í•˜ëŠ” ìŠ¤íƒì‚¬ì´ì¦ˆ ì…ë ¥ : ");
 	scanf("%d", &input);
-	// TODO : ¿¹¿ÜÃ³¸®
-	int sizeOfArray = input;
-	UC* stack = (UC*)malloc(input * sizeof(UC));// ½ºÅÃ ¼±¾ğ
+	
+	sizeOfArray = input;
+	stack = (UC*)malloc(input * sizeof(UC));// ìŠ¤íƒ ì„ ì–¸
 	printf("%d", sizeOfArray);
 	input = 0;
-	int i = 0;
-	// ÃÊ±âÈ­ ÇØÁÖ´Â°Ô ¾ÈÁ¤ÀûÀÌ´Ù.
+
+	// ì´ˆê¸°í™” í•´ì£¼ëŠ”ê²Œ ì•ˆì •ì ì´ë‹¤.
 	for (i = 0; i < sizeOfArray; i++) {
 		stack[i] = NULL;
 	}
@@ -48,14 +54,14 @@ int main() {
 				printf(" [%d]", stack[i]);
 		}
 		puts("\n\n");
-		printf(" ÀÔ·Â ¶õ >> ");
+		printf(" ì…ë ¥ ë€ >> ");
 		scanf("%d", &input);
 		switch (input) {
 		case 1: system("cls"); push(stack, sizeOfArray); break;
 		case 2: system("cls"); pop(stack, sizeOfArray); break;
 		case 3: system("cls"); size(stack, sizeOfArray); break;
 		case 4: system("cls"); isEmpty(stack, sizeOfArray); break;
-		case 5: system("cls"); free(stack, sizeOfArray);  return 0;
+		case 5: system("cls"); free(stack);  return 0;
 		default: system("cls"); continue;
 		}
 	}
@@ -66,16 +72,16 @@ int main() {
 
 
 void push(UC* stack, int sizeOfArray) {
-	printf("[PUSH]");
-	// ¼ıÀÚ ÀÔ·Â ¶õ
 	int num = 0;
-	printf(" »ğÀÔÇÒ ¼ıÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä >> ");
+	int stackSize = sizeOfArray;
+	int i = 0;
+
+	printf("[PUSH]");
+	// ìˆ«ì ì…ë ¥ ë€
+	printf(" ì‚½ì…í•  ìˆ«ìë¥¼ ì…ë ¥í•˜ì„¸ìš” >> ");
 	scanf("%d", &num);
 
-	// »çÀÌÁî Ã¼Å©
-	int stackSize = sizeOfArray;
-	// ¾Õ¿¡¼­ºÎÅÍ ºó°ª ÀÖ´ÂÁö È®ÀÎÈÄ °ª ³Ö±â
-	int i = 0;
+	// ì•ì—ì„œë¶€í„° ë¹ˆê°’ ìˆëŠ”ì§€ í™•ì¸í›„ ê°’ ë„£ê¸°
 	for (i = 0; i < stackSize; i++) {
 		if (stack[i] == NULL) {
 			stack[i] = (UC)num;
@@ -85,15 +91,14 @@ void push(UC* stack, int sizeOfArray) {
 }
 
 void pop(UC* stack, int sizeOfArray) {
+	int stackSize = sizeOfArray;
+	int i = 0;
+	
 	printf("[POP]");
 	
-	// »çÀÌÁî Ã¼Å©
-	int stackSize = sizeOfArray;
-
-	// µÚ¿¡¼­ ºÎÅÍ ºó°ª ÀÖ³ª º¸±â
-	int i = 0;
+	// ë’¤ì—ì„œ ë¶€í„° ë¹ˆê°’ ìˆë‚˜ ë³´ê¸°
 	for (i = stackSize - 1; i >= 0; i--) {
-		// Áö¿ì°í ¶ç¿öÁÖ±â
+		// ì§€ìš°ê³  ë„ì›Œì£¼ê¸°
 		if (stack[i] != NULL) {
 			printf(" Delte >> %d ", (int)stack[i]);
 			stack[i] = NULL;
@@ -103,12 +108,12 @@ void pop(UC* stack, int sizeOfArray) {
 }
 
 void size(UC* stack, int sizeOfArray) {
-	printf("[SIZE]");
-	// »çÀÌÁî Ã¼Å©
 	int stackSize = sizeOfArray;
-
-	// ¾Õ¿¡¼­ºÎÅÍ ³¡±îÁö ºó °ª ÀÖÀ»¶§ ±îÁö Ä«¿îÆ® ÈÄ Ãâ·Â
 	int i = 0;
+
+	printf("[SIZE]");
+	
+	// ì•ì—ì„œë¶€í„° ëê¹Œì§€ ë¹ˆ ê°’ ìˆì„ë•Œ ê¹Œì§€ ì¹´ìš´íŠ¸ í›„ ì¶œë ¥
 	for (i = 0; i < stackSize; i++) {
 		if (stack[i] == NULL) {
 			break;
@@ -119,19 +124,19 @@ void size(UC* stack, int sizeOfArray) {
 }
 
 void isEmpty(UC* stack, int sizeOfArray) {
-	printf("[isEmpty]");
-	// »çÀÌÁî Ã¼Å©
 	int stackSize = sizeOfArray;
-
-	// µÚ¿¡¼­ ºÎÅÍ ¾Õ±îÁö ºó°ªÀÖ³ª Ã¼Å©
 	int i = 0;
+	
+	printf("[isEmpty]");
+	
+	// ë’¤ì—ì„œ ë¶€í„° ì•ê¹Œì§€ ë¹ˆê°’ìˆë‚˜ ì²´í¬
 	for (i = stackSize-1; i >= 0; i--) {
 		if (stack[i] != NULL) {
-			printf(" °ªÀÌ ÀÖÀ½ ");
+			printf(" ê°’ì´ ìˆìŒ ");
 			break;
 		}
 		else if (i == 0) {
-			printf(" °ªÀÌ ¾øÀ½ ");
+			printf(" ê°’ì´ ì—†ìŒ ");
 		}
 	}
 }
