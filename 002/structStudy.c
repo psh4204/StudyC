@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define TEST4
+#define TEST6
 
 // 구조체 예제1
 #ifdef TEST1
@@ -104,6 +104,7 @@ int main()
 
 // 구조체 포인터 예제3
 #ifdef TEST4
+// 구조체 내에 포인터가 있음.
 struct TEST{
 	int c;
 	int *pointer;
@@ -125,4 +126,79 @@ int main()
 
 	return 0;
 }
+#endif
+
+
+// 구조체 포인터 예제4
+#ifdef TEST5
+// 구조체 내에 포인터가 있음.
+struct TEST{
+	int c;
+};
+
+int add_one(int *a);
+
+int main()
+{
+	struct TEST t;
+	struct TEST *pt = &t;
+
+	/* pt가 가리키는 구조체 변수의 c 멤버의 값을 0으로 한다.*/
+	pt->c = 0;
+
+	/*
+	add_one 함수의 인자에 t 구조체 변수의 멤버 c 의 주소값을
+	전달하고 있다.
+	*/
+	add_one(&t.c);
+
+	printf("t.c : %d\n", t.c);
+
+	/*
+	add_one 함수의 인자에 pt 가 가리키는 구조체 변수의 멤버 c의
+	주소값을 전달하고 있다.
+	*/
+	add_one(&pt->c);
+
+	printf("t.c : %d \n", t.c);
+
+	return 0;
+}
+
+int add_one(int *a){
+	*a += 1;
+	return 0;
+}
+
+#endif
+
+
+// 구조체로 인자 전달 하기 1
+#ifdef TEST6
+// 구조체 초기화를 위해 함수를 만들었지만
+// 구조체를 초기화 시켜주지 않으면 사용할 수 가 없었다.
+// 구조체 포인터를 이용해서 초기화 시켜주기로 했다.
+struct TEST{
+	int age;
+	int gender;
+};
+
+int set_human(struct TEST * a, int age, int gender);
+
+int main()
+{
+	struct TEST human;
+	set_human(&human, 10, 1);
+	printf("AGE : %d, // Gender : %d", human.age, human.gender);
+
+	return 0;
+}
+
+// 구조체 초기화하라고 만든 함수
+int set_human(struct TEST * a, int age, int gender){
+	a->age =age;
+	a->gender = gender;
+	return 0;
+}
+
 #endif
