@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define TEST3
+#define TEST4
 
 // 구조체 예제1
 #ifdef TEST1
@@ -79,4 +79,50 @@ int main(){
 	return 0;
 }
 
+#endif
+
+
+// 구조체 포인터 예제2
+#ifdef TEST3
+struct TEST{
+	int c;
+};
+
+int main()
+{
+	struct TEST t;
+	struct TEST *pt = &t;
+
+	(*pt).c = 0; // pt->c = 0
+
+	printf("t.c : %d \n", t.c);
+
+	return 0;
+}
+#endif
+
+
+// 구조체 포인터 예제3
+#ifdef TEST4
+struct TEST{
+	int c;
+	int *pointer;
+};
+
+int main()
+{
+	struct TEST t;
+	struct TEST *pt = &t;
+	int i = 0;
+
+	// t의 멤버 pointer가 i를 가리키게 한다.
+	pt->pointer = &i;
+
+	i = 3;
+	// -> 가 * 보다 우선순위가 높기 때문에 가능한 코드
+	// *(pt->pointer)
+	printf("i : %d \n", *pt->pointer);
+
+	return 0;
+}
 #endif
