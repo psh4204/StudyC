@@ -169,3 +169,57 @@ int main(){
 	}
 }
 #endif 
+
+#ifdef TEST3
+#include <string.h> // 문자열 관련 기본 라이브러리
+int main(){
+	char str1[20] = {"hi"};
+	char str2[20] = {"hello every1"};
+	char str3[20] = {"hi"};
+
+	// 문자열 검사
+	if(!strcmp(str1, str2)){
+		printf("%s and %s equal \n", str1, str2);
+	} else{
+		printf("%s and %s is NOT equal\n", str1, str2);
+	}
+	if(!strcmp(str1, str3)){
+		printf("%s and %s equal \n", str1, str3);
+	} else{
+		printf("%s and %s is NOT equal\n", str1, str3);
+	}
+
+	return 0;
+}
+#endif
+
+// 구조체 동적할당
+#ifdef TEST6
+struct Something {
+	int a,b;
+};
+
+int main(){
+	struct Something *arr;
+	int size, i;
+
+	printf("원하시는 구조체 배열 크기 : ");
+	scanf("%d", &size);
+
+	arr = (struct Something *)malloc(sizeof(struct Something)* size);
+
+	for(i = 0; i< size; i++){
+		printf("arr[%d].a : ", i);
+		scanf("%d", &arr[i].a);
+		printf("arr[%d].b : ", i);
+		scanf("%d", &arr[i].b);
+	}
+
+	for(i = 0; i<size; i++){
+		printf("arr[%d].a : %d, arr[%d].b : %d \n", i, arr[i].a,i, arr[i].b);
+	}
+
+	free(arr);
+}
+
+#endif
