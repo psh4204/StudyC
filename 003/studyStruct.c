@@ -223,3 +223,112 @@ int main(){
 }
 
 #endif
+
+// 링크드리스트 (노드)예제
+// - 노드, 생성, 삽입, 삭제
+#ifdef TEST7
+// 노드 구조체
+struct Node{
+	int data;				// 데이터
+	struct Node * nextNode;	// 다음 노드 위치
+};
+
+struct Node* CreateNode(int data);
+struct Node* InsertNode(struct Node * current, int data);
+void DestoryNode(struct Node * destroy, struct Node *head);
+void PrintNodeFrom(struct Node * from);
+
+// main
+int main(){
+	struct Node* Node1 = CreateNode(100);
+	struct Node* Node2 = InsertNode(Node1, 200);
+	struct Node* Node3 = InsertNode(Node2, 300);
+	
+	/* Node 2 뒤에 Node4 넣기 */
+	struct Node* Node4 = InsertNode(Node2, 400);
+	PrintNodeFrom(Node1);
+	return 0;
+}
+
+// 노드 생성 함수
+struct Node* CreateNode(int data) {
+	struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+	newNode->data = data;
+	newNode->nextNode = NULL;
+	return newNode;
+}
+
+// current Node 뒤에 노드를 새로 만들어 넣는 함수
+struct Node* InsertNode(struct Node * current, int data){
+	// current Node의 다음노드를 newNode의 다음 노드로 할 예정
+	struct Node* after = current->nextNode;
+
+	// 새로운 노드를 생성
+	struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+
+	// 새로운 노드에 값을 넣어준다.
+	newNode->data = data;
+	newNode->nextNode = after;
+
+	// current Node의 다음노드는 newNode
+	current->nextNode = newNode;
+
+	return newNode;
+}
+
+// 선택된 노드 삭제 함수
+// Head 노드부터 차례로 내려가서 destroy Node단까지 찾은 후 삭제처리
+void DestoryNode(struct Node * destroy, struct Node *head){
+	// 다음 노드를 가리킬 커서
+	struct Node * cursor = head;
+
+	// head Node를 파괴하려 한다면
+	if(destroy == head){
+		free(destroy);
+		return;
+	}
+
+	// detroy앞에 있는 노드를 찾는 과정(head가 커서역할)
+	// 만약 next가 NULL 이면 종료
+	while(cursor){
+		// 만일 cursor 다음 노드가 destroy 라면 next 가 destory 앞 노드라면
+		if(cursor->nextNode == destroy){
+			// destory 노드의 nextNode를 준다.
+			cursor->nextNode = destroy->nextNode;
+		}
+		// next는 다음노드를 가리킨다.
+		cursor = cursor->nextNode;
+	}
+	free(destroy);
+}
+
+void PrintNodeFrom(struct Node * from){
+	// from 이 NULL일때 까지 출력
+	while(from){
+		printf("노드 데이터 :%d \n", from->data);
+		from = from->nextNode;
+	}
+}
+
+#endif
+
+// 메모리 관련 함수1. memcpy
+#ifdef TEST8
+int main()
+{
+	char str[50] = "I love Chewing C hahaha"
+	char str2[50];
+	char str3[50];
+
+	// 메모리 크기만큼 복사해주는 함수
+	// - strcpy 대체제로 사용가
+	// - 문자열길이 + 1  :  C는 문자열 뒤에 \0이 있어야 문자열로 인식하고, 항상있음
+	memcpy(str2, str, strlen(str) + 1);
+	memcpy(str3, "hello", 6);
+
+	printf("%s \n", str);
+	printf("%s \n", str2);
+	printf("%s \n", str3);
+}
+
+#endif
